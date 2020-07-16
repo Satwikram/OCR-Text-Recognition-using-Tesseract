@@ -12,7 +12,7 @@ def decode_predictions(scores, geometry):
     # confidence scores
     (numRows, numCols) = scores.shape[2:4]
     rects = []
-    confidence = []
+    confidences = []
 
     # Loop overs the number of Rows
     for y in range(0, numRows):
@@ -42,3 +42,20 @@ def decode_predictions(scores, geometry):
         h = xData0[x] + xData2[x]
         w = xData1[x] + xData3[x]
 
+        # compute both the starting and ending (x, y)-coordinates
+        # for the text prediction bounding box
+        endX = int(offsetX + (cos * xData1[x]) + (sin * xData2[x]))
+        endY = int(offsetY - (sin * xData1[x]) + (cos * xData2[x]))
+        startX = int(endX - w)
+        startY = int(endY - h)
+
+        # add the bounding box coordinates and probability score
+        # to our respective lists
+        rects.append((startX, startY, endX, endY))
+        confidences.append(scoresData[x])
+
+    # return a tuple of the bounding boxes and associated confidences
+    return (rects, confidences)
+
+# construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8525ab05-19c6-4da2-940e-2f8bcb0c7a25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ocr_text_recognition.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocr_text_recognition.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
