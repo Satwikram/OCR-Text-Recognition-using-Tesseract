@@ -15,12 +15,30 @@ def decode_predictions(scores, geometry):
     confidence = []
 
     # Loop overs the number of Rows
-    for i in range(0, numRows):
-        scoresData = scores[0, 0, i]
-        xData0 = geometry[0, 0, i]
-        xData1 = geometry[0, 1, i]
-        xData2 = geometry[0, 2, i]
-        xData3 = geometry[0, 3, i]
-        anglesData = geometry[0, 4, i]
+    for y in range(0, numRows):
+        scoresData = scores[0, 0, y]
+        xData0 = geometry[0, 0, y]
+        xData1 = geometry[0, 1, y]
+        xData2 = geometry[0, 2, y]
+        xData3 = geometry[0, 3, y]
+        anglesData = geometry[0, 4, y]
 
     # Loop over the Columns
+    for x in range(0, numCols):
+        if scoresData[x] < args["min_confidence"]:
+            continue
+        # compute the offset factor as our resulting feature
+        # maps will be 4x smaller than the input image
+        (offsetX, offsetY) = (x * 4.0, y * 4.0)
+
+        # extract the rotation angle for the prediction and
+        # then compute the sin and cosine
+        angle = anglesData[x]
+        cos = np.cos(angle)
+        sin = np.sin(angle)
+
+        # use the geometry volume to derive the width and height
+        # of the bounding box
+        h = xData0[x] + xData2[x]
+        w = xData1[x] + xData3[x]
+
