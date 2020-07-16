@@ -71,3 +71,21 @@ ap.add_argument("-w", "--width", type=int, default=320, help="nearest multiple o
 ap.add_argument("-e", "--height", type=int, default=320, help="nearest multiple of 32 for resized height")
 
 ap.add_argument("-p", "--padding", type=float, default=0.0, help="amount of padding to add to each border of ROI")
+
+args = vars(ap.parse_args())
+
+# load the input image and grab the image dimensions
+img = cv2.imread(args["image"])
+orig = img.copy()
+(origH, origW) = img.shape[:2]
+
+# set the new width and height and then determine the ratio in change
+# for both the width and height
+
+(newW, newH) = (args["width"], args["height"])
+rW = origW / float(newW)
+rH = origH / float(newH)
+
+# resize the image and grab the new image dimensions
+image = cv2.resize(img, (newW, newH))
+(H, W) = image.shape[:2]
